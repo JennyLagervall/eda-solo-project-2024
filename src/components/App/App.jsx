@@ -75,7 +75,7 @@ function App() {
             <AdminPage />
           </ProtectedRoute>
 
-          <ProtectedRoute exact path='/:id'>
+          <ProtectedRoute exact path='/grantlist/:id'>
             <GrantDetails />
           </ProtectedRoute>
 
