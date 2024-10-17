@@ -5,8 +5,9 @@ function* addLog(action) {
   try {
     console.log('trying to add log', action.payload);
 
-    yield axios.post(`/api/log`, action.payload);
-    yield put({ type: 'SET_LOG' });
+    const response = yield axios.post(`/api/log`, action.payload);
+
+    yield put({ type: 'MY_ADD_LOG', payload: action.payload });
   } catch (error) {
     console.log('error in add log saga', error);
   }
