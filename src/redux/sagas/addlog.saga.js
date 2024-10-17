@@ -12,7 +12,7 @@ function* addLog(action) {
     console.log('error in add log saga', error);
   }
 }
-
+// comment 
 function* addLogSaga() {
   yield takeLatest('ADD_LOG', addLog);
 }
