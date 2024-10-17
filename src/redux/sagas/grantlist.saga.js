@@ -6,7 +6,7 @@ function* fetchGrantList() {
     const response = yield axios.get('/api/grant');
     yield put({ type: 'GET_GRANT_LIST', payload: response.data });
   } catch (error) {
-    console.log('User get request failed', error);
+    console.log('List GET saga request failed', error);
   }
 }
 

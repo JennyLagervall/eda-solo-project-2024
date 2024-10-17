@@ -3,6 +3,20 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 
+// GET to get the logs from DB
+router.get('/', (req, res) => {
+  let queryText = 'SELECT * FROM "log" ORDER BY "submit_date" DESC;';
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log('error getting logs', error);
+      res.sendStatus(500);
+    });
+});
+
 // POST for a new log
 router.post('/', rejectUnauthenticated, (req, res) => {
   console.log(req.body);
@@ -18,8 +32,8 @@ router.post('/', rejectUnauthenticated, (req, res) => {
       req.body.details,
       req.body.log_type,
       req.body.expenditure_amount,
-      req.user.id,
       req.body.grant_id,
+      req.user.id,
     ])
     .then((results) => {
       console.log('log created');

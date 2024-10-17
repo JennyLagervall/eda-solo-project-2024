@@ -24,7 +24,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 router.get('/:id', rejectUnauthenticated, (req, res) => {
   const grantId = req.params.id;
   const query = `
-    SELECT 
+ SELECT 
   "grant"."id" AS "grant_orig_id",
   "grant"."grant_name",
   "grant"."funding_src",
@@ -46,22 +46,21 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
   "user"."id" AS "user_orig_id",
   "user"."first_name",
   "user"."last_name",
-  "user"."role",
-  "log"."id" AS "log_orig_id",
-  "log"."submit_date",
-  "log"."details",
-  "log"."log_type",
-  "log"."expenditure_amount"
+  "user"."role"
 FROM "grant"
-LEFT JOIN "user_grant" ON "user_grant"."grant_id" = "grant"."id" 
-LEFT JOIN "user" ON "user"."id" = "user_grant"."user_id"
-LEFT JOIN "log" ON "log"."grant_id" = "grant"."id"
+JOIN "user_grant" ON "user_grant"."grant_id" = "grant"."id" 
+JOIN "user" ON "user"."id" = "user_grant"."user_id"
 WHERE "grant"."id" = $1;
   `;
   pool
     .query(query, [grantId])
     .then((result) => {
-      res.send(result.rows);
+      if (result.rows.length > 0) {
+        res.send(result.rows[0]);
+      } else {
+        console.log('error no grant with that ID', grantId);
+        res.status(400).send({error:'err no grant with this ID!'});
+      }
     })
     .catch((err) => {
       console.log('error GETing grants', err);
@@ -138,7 +137,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     });
 });
 
-router.put('/:id', rejectUnauthenticated, (req, res) => {
+router.put('/edit/:id', rejectUnauthenticated, (req, res) => {
   let grantId = req.params.id;
   console.log('PUT request for entire grant by id', grantId);
   let sqlQuery = ` 

@@ -1,9 +1,15 @@
-const grantDetails = (state = [], action) => {
+const grantDetails = (state = {}, action) => {
   switch (action.type) {
-    case 'GET_GRANT_DETAILS':
+    case 'SET_GRANT_DETAILS':
       return action.payload;
-    default:
+       default:
       return state;
   }
 };
 export default grantDetails;
+
+//  case 'EDIT_GRANT_DETAILS':
+//         return {...state, [action.payload.key]: action.payload.value};
+//     case 'RESET': //this will get ready for new state
+//         return {};
+ 
