@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function LogForm({ grantId }) {
-
   const userId = useSelector((store) => store.user.id);
+  
 
   const [details, setDetails] = useState('');
   const [logType, setLogType] = useState('');
@@ -15,7 +15,7 @@ export default function LogForm({ grantId }) {
     event.preventDefault();
 
     dispatch({
-      type: 'ADD_LOG',
+      type: 'NEW_LOG',
       payload: { details: details, log_type: logType, expenditure_amount: amount, grant_id: grantId, user_id: userId },
     });
     setDetails('');
@@ -34,5 +34,3 @@ export default function LogForm({ grantId }) {
     </div>
   );
 }
-
-

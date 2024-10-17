@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 
 // POST for a new log
 router.post('/', rejectUnauthenticated, (req, res) => {
-  console.log(req.body);
+  console.log('req.body', req.body);
   // the log will need stuff on the req.body to include the grant_id
   // const {details, log_type, expenditure_amount, grant_id} = req.body;
   const newLogQuery = `

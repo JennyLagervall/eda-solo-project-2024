@@ -7,14 +7,16 @@ function* addLog(action) {
 
     const response = yield axios.post(`/api/log`, action.payload);
 
-    yield put({ type: 'MY_ADD_LOG', payload: action.payload });
+    const newLog = response.data;
+
+    yield put({ type: 'FETCH_LOG' });
   } catch (error) {
     console.log('error in add log saga', error);
   }
 }
-// comment 
+// comment
 function* addLogSaga() {
-  yield takeLatest('ADD_LOG', addLog);
+  yield takeLatest('NEW_LOG', addLog);
 }
 
 export default addLogSaga;
