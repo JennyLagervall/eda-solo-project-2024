@@ -12,29 +12,31 @@ export default function GrantList() {
   useEffect(() => {
     dispatch({ type: 'FETCH_GRANT_LIST' });
   }, []);
+  
 
   return (
     <div>
       <h2>This is the grant List page!</h2>
       <ul>
-        {grantList.map((grant) => {
-          return (
-            <div key={grant.id}>
-              <li>
-                grant id:{grant.id} <br />
-                Name:{grant.grant_name} <br />
-                Funding Source: {grant.funding_src} <br />
-                Lead: {grant.grant_lead} <br />
-                Description: {grant.description} <br />
-                Award Sum: ${grant.award_sum} <br />
-                Start Date: <br />
-                End Date: <br />
-              </li>
-
-              <button onClick={() => history.push(`/grantlist/${grant.id}`)}>Grant Details</button>
-            </div>
-          );
-        })}
+        {grantList
+          .filter((grant) => grant.archived === false)
+          .map((grant) => {
+            return (
+              <div key={grant.id}>
+                <li>
+                  Name: {grant.grant_name} ({grant.grant_abbreviation})
+                  <br />
+                  Funding Source: {grant.funding_src} <br />
+                  Lead: {grant.grant_lead} <br />
+                  Description: {grant.description} <br />
+                  Award Sum: ${grant.award_sum.toLocaleString('en-US')} <br />
+                  Start Date: {String(grant.start_date).substring(0, 10)} <br />
+                  End Date: {String(grant.end_date).substring(0, 10)} <br />
+                </li>
+                <button onClick={() => history.push(`/grantlist/${grant.id}`)}>Grant Details</button>
+              </div>
+            );
+          })}
       </ul>
     </div>
   );

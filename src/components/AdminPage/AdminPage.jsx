@@ -1,18 +1,67 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-// Basic functional component structure for React with default state
-// value setup. When making a new component be sure to replace the
-// component name TemplateFunction with the name for the new component.
 function AdminPage() {
-  // Using hooks we're creating local state for a "heading" variable with
-  // a default value of 'Functional Component'
-  const store = useSelector((store) => store);
-  const [heading, setHeading] = useState('Functional Component');
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const grantList = useSelector((store) => store.grantList);
+  console.log('grant list store', grantList);
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_GRANT_LIST' });
+  }, []);
 
   return (
     <div>
-      <h2>{heading}</h2>
+      <h2>Admin Page</h2>
+      <ul>
+        {grantList
+          .filter((a) => a.archived === false)
+          .map((grant) => {
+            return (
+              <div key={grant.id}>
+                <li>
+                  {grant.grant_name} <br />
+                </li>
+                <button onClick={() => history.push(`/edit/${grant.id}`)}>Edit Grant</button>
+                <button
+                  onClick={() => {
+                    console.log('Archiving grant with id:', grant.id);
+                    dispatch({ type: 'ARCHIVE_GRANT', payload: grant.id });
+                  }}
+                >
+                  Archive Grant
+                </button>
+              </div>
+            );
+          })}
+      </ul>
+      <div>
+        <h3>Archived Grants </h3>
+        <ul>
+          {grantList
+            .filter((a) => a.archived === true)
+            .map((grant) => {
+              return (
+                <div key={grant.id}>
+                  <li>
+                    {grant.grant_name} <br />
+                  </li>
+                  <button
+                    onClick={() => {
+                      console.log('Archiving grant with id:', grant.id);
+                      dispatch({ type: 'ARCHIVE_GRANT', payload: grant.id });
+                    }}
+                  >
+                    Restore
+                  </button>
+                </div>
+              );
+            })}
+        </ul>
+      </div>
     </div>
   );
 }

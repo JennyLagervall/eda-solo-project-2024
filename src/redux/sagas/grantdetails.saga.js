@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-function* fetchGrantDetails(action) {
+function* grabGrantDetails(action) {
   try {
     const response = yield axios.get(`/api/grant/${action.payload}`);
     console.log('grant details', response.data);
@@ -11,8 +11,12 @@ function* fetchGrantDetails(action) {
   }
 }
 
+
+
+
 function* grantDetailsSaga() {
-  yield takeLatest('FETCH_GRANT_DETAILS', fetchGrantDetails);
+  yield takeLatest('FETCH_GRANT_DETAILS', grabGrantDetails);
+  
 }
 
 export default grantDetailsSaga;

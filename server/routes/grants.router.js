@@ -20,9 +20,10 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     });
 });
 
-// GET for grant details AND its associated logs
+// GET for grant details 
 router.get('/:id', rejectUnauthenticated, (req, res) => {
   const grantId = req.params.id;
+  console.log('Grant ID received:', grantId);
   const query = `
  SELECT 
   "grant"."id" AS "grant_orig_id",
@@ -48,8 +49,8 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
   "user"."last_name",
   "user"."role"
 FROM "grant"
-JOIN "user_grant" ON "user_grant"."grant_id" = "grant"."id" 
-JOIN "user" ON "user"."id" = "user_grant"."user_id"
+LEFT JOIN "user_grant" ON "user_grant"."grant_id" = "grant"."id" 
+LEFT JOIN "user" ON "user"."id" = "user_grant"."user_id"
 WHERE "grant"."id" = $1;
   `;
   pool
@@ -70,10 +71,10 @@ WHERE "grant"."id" = $1;
 
 // POST for a new Grant
 router.post('/', rejectUnauthenticated, (req, res) => {
-  console.log(req.body);
+  console.log('req.body', req.body);
   const newGrantQuery = `
     INSERT INTO "grant" 
-    ("grant_name", "funding_src", "grant_abbreviation", "grant_lead", "grant_type" "description", "last_edit_by", "award_sum", "start_date", "end_date", "q1_report_date", "q2_report_date", "q3_report_date", "q4_report_date", "audit_date", "notes")
+    ("grant_name", "funding_src", "grant_abbreviation", "grant_lead", "grant_type", "description", "last_edit_by", "award_sum", "start_date", "end_date", "q1_report_date", "q2_report_date", "q3_report_date", "q4_report_date", "audit_date", "notes")
     VALUES
     ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
     RETURNING "id";
@@ -85,7 +86,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     req.body.grant_lead,
     req.body.grant_type,
     req.body.description,
-    req.body.last_edit_by,
+    req.user.first_name,
     req.body.award_sum,
     req.body.start_date,
     req.body.end_date,
@@ -149,7 +150,8 @@ router.put('/edit/:id', rejectUnauthenticated, (req, res) => {
 	"grant_lead"=$4,
 	"grant_type"=$5,
 	"description"=$6,
-	"last_edit_by"=$7,
+  "last_edit_date"=CURRENT_DATE,
+	"last_edit_by"=(SELECT CONCAT("first_name", ' ', "last_name") FROM "user" WHERE "id" = $7),
 	"award_sum"=$8,
 	"start_date"=$9,
 	"end_date"=$10,
@@ -170,7 +172,8 @@ router.put('/edit/:id', rejectUnauthenticated, (req, res) => {
     req.body.grant_lead,
     req.body.grant_type,
     req.body.description,
-    req.body.last_edit_by,
+    //req.body.last_edit_date,
+    req.user.id,
     req.body.award_sum,
     req.body.start_date,
     req.body.end_date,

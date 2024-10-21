@@ -16,7 +16,7 @@ export default function LogForm({ grantId }) {
 
     dispatch({
       type: 'NEW_LOG',
-      payload: { details: details, log_type: logType, expenditure_amount: amount, grant_id: grantId, user_id: userId },
+      payload: { details: details, log_type: logType, expenditure_amount: Number(amount), grant_id: grantId, user_id: userId },
     });
     setDetails('');
     setLogType('');

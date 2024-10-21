@@ -18,6 +18,7 @@ export default function Logs({ grantId }) {
     <>
       <h3> Grant Logs</h3>
       <div>
+        <h4> Add Log </h4>
         <LogForm grantId={grantId} />
       </div>
       <div>
@@ -26,14 +27,23 @@ export default function Logs({ grantId }) {
             .filter((l) => Number(l.grant_id) === Number(grantId))
             .map((log) => {
               return (
-                
-                  <li key={log.id}>
-                    Submitted on: {log.submit_date} <br />
-                    Log type: {log.log_type} <br />
-                    Expenditure amount: ${log.expenditure_amount} <br />
-                    Details: {log.details} <br />
-                  </li>
-                
+                <li key={log.id}>
+                  Submitted on: {String(log.submit_date).substring(0, 10)} <br />
+                  Submitted by: {log.first_name} {log.last_name}
+                  <br />
+                  Log type: {log.log_type} <br />
+                  Expenditure amount: $
+                   {log.expenditure_amount ? Number(log.expenditure_amount).toLocaleString('en-US') : 'N/A' } <br />
+                  Details: {log.details} <br />
+                  <button
+                    onClick={() => {
+                      console.log('deleting log by id:', log.id);
+                      dispatch({ type: 'DELETE_LOG', payload: log.id });
+                    }}
+                  >
+                    Delete Log
+                  </button>
+                </li>
               );
             })}
         </ul>

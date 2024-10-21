@@ -17,6 +17,7 @@ import GrantSuccess from '../GrantSuccess/GrantSuccess';
 import AdminPage from '../AdminPage/AdminPage';
 
 import './App.css';
+import EditGrant from '../EditGrant/EditGrant';
 
 function App() {
   const dispatch = useDispatch();
@@ -77,6 +78,9 @@ function App() {
 
           <ProtectedRoute exact path='/grantlist/:id'>
             <GrantDetails />
+          </ProtectedRoute>
+          <ProtectedRoute exact path='/edit/:id'>
+            <EditGrant  />
           </ProtectedRoute>
 
           <Route>

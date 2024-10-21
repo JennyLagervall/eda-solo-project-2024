@@ -5,7 +5,23 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 
 // GET to get the logs from DB
 router.get('/', (req, res) => {
-  let queryText = 'SELECT * FROM "log" ORDER BY "submit_date" DESC;';
+  let queryText = ` SELECT
+  		log.id,
+    	log.log_type,
+    	log.details,
+    	log.expenditure_amount,
+    	log.submit_date,
+    	log.grant_id,
+		"user".first_name,
+		"user".last_name,
+		log.user_id
+  FROM "log"
+  JOIN "user" ON "user"."id" = "user_id"
+  group by log.log_type, log.details, log.expenditure_amount, log.submit_date, log.grant_id, "user".first_name,
+		"user".last_name,
+		log.user_id,
+		log.id
+	order by log.submit_date desc;`;
   pool
     .query(queryText)
     .then((result) => {

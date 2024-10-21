@@ -12,8 +12,20 @@ function* fetchLogs() {
   }
 }
 
+function* deleteLogs(action) {
+  try {
+    const response = yield axios.delete(`/api/log/${action.payload}`);
+    console.log('Trying to delete log', response.data);
+
+    yield put({ type: 'FETCH_LOG', payload: action.payload});
+  } catch (error) {
+    console.log('Log DELETE saga request failed', error);
+  }
+}
+
 function* logSaga() {
   yield takeLatest('FETCH_LOG', fetchLogs);
+  yield takeLatest('DELETE_LOG', deleteLogs);
 }
 
 export default logSaga;
