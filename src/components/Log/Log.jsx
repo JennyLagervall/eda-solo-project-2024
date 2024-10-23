@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import LogForm from '../LogForm/LogForm';
+import moment from 'moment-timezone';
+import GrantFunds from '../GrantFunds/GrantFunds';
 
 export default function Logs({ grantId }) {
   const logs = useSelector((store) => store.log);
@@ -11,7 +13,7 @@ export default function Logs({ grantId }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_LOG', payload: id });
+    dispatch({ type: 'FETCH_LOG' });
   }, []);
 
   return (
@@ -28,12 +30,16 @@ export default function Logs({ grantId }) {
             .map((log) => {
               return (
                 <li key={log.id}>
-                  Submitted on: {String(log.submit_date).substring(0, 10)} <br />
+                  Submitted on: {moment(log.submit_date).calendar()} <br />
                   Submitted by: {log.first_name} {log.last_name}
                   <br />
                   Log type: {log.log_type} <br />
-                  Expenditure amount: $
-                   {log.expenditure_amount ? Number(log.expenditure_amount).toLocaleString('en-US') : 'N/A' } <br />
+                  {log.expenditure_amount > 0 && (
+                    <>
+                      Expenditure amount: $
+                      {log.expenditure_amount ? Number(log.expenditure_amount).toLocaleString('en-US') : 'N/A'} <br />
+                    </>
+                  )}
                   Details: {log.details} <br />
                   <button
                     onClick={() => {
@@ -48,6 +54,7 @@ export default function Logs({ grantId }) {
             })}
         </ul>
       </div>
+      <GrantFunds grantId={id} />
     </>
   );
 }

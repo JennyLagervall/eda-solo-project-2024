@@ -13,7 +13,6 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import GrantList from '../GrantList/GrantList';
 import GrantDetails from '../GrantDetails/GrantDetails';
 import GrantForm from '../GrantForm/GrantForm';
-import GrantSuccess from '../GrantSuccess/GrantSuccess';
 import AdminPage from '../AdminPage/AdminPage';
 
 import './App.css';
@@ -68,10 +67,6 @@ function App() {
             <GrantForm />
           </ProtectedRoute>
 
-          <ProtectedRoute exact path='/grantsuccess'>
-            <GrantSuccess />
-          </ProtectedRoute>
-
           <ProtectedRoute exact path='/administrator'>
             <AdminPage />
           </ProtectedRoute>
@@ -80,7 +75,7 @@ function App() {
             <GrantDetails />
           </ProtectedRoute>
           <ProtectedRoute exact path='/edit/:id'>
-            <EditGrant  />
+            <EditGrant />
           </ProtectedRoute>
 
           <Route>

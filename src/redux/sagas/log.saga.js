@@ -17,7 +17,7 @@ function* deleteLogs(action) {
     const response = yield axios.delete(`/api/log/${action.payload}`);
     console.log('Trying to delete log', response.data);
 
-    yield put({ type: 'FETCH_LOG', payload: action.payload});
+    yield put({ type: 'FETCH_LOG' });
   } catch (error) {
     console.log('Log DELETE saga request failed', error);
   }

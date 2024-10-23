@@ -82,7 +82,11 @@ export default function GrantForm() {
             onChange={(event) => setDescription(event.target.value)}
           />
           <input placeholder='Funds Awarded' value={awardSum} onChange={(event) => setAwardSum(event.target.value)} />
-          <input placeholder='Start Date' value={startDate} onChange={(event) => setStartDate(event.target.value)} />
+          <input
+            placeholder='Start Date'
+            value={startDate}
+            onChange={(event) => setStartDate(event.target.value)}
+          />
           <input placeholder='End Date' value={endDate} onChange={(event) => setEndDate(event.target.value)} />
           <input
             placeholder='1st Quart Report due'
