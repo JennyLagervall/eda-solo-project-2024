@@ -3,12 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import Logs from '../Log/Log';
 import moment from 'moment-timezone';
-import { Nav } from 'react-bootstrap';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
-
+import '../GrantList/grantList.css';
+import { Card, Button } from 'react-bootstrap';
 
 export default function GrantDetails() {
   const gd = useSelector((store) => store.grantDetails);
@@ -30,11 +26,31 @@ export default function GrantDetails() {
 
   return (
     <>
-      <h3>
-        {gd.grant_name}({gd.grant_abbreviation})
-      </h3>
+      <div style={{ textAlign: 'center' }}>
+        <h3
+          style={{
+            paddingTop: '60px',
+            color: 'white',
+            textAlign: 'center',
+            fontSize: '52px',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+            display: 'inline-block',
+            borderBottom: '3px solid #637dbd',
+          }}
+        >
+          Grant Details
+        </h3>
+      </div>
 
-      <div>
+      <div
+        style={{
+          maxWidth: '1600px', // text box width
+          margin: '0 auto',
+          padding: '0 20px',
+          marginTop: '50px',
+          // backgroundColor: '#fbf7ed',
+        }}
+      >
         <ul className='nav nav-tabs justify-content-start' role='tablist'>
           <li className='nav-item' role='presentation'>
             <button
@@ -43,6 +59,15 @@ export default function GrantDetails() {
               type='button'
               role='tab'
               aria-selected={activeTab === 'Overview'}
+              style={{
+                fontSize: '20px',
+                color: '#ffffff',
+                backgroundColor: activeTab === 'Overview' ? '#506299' : '#637dbd',
+                padding: '15px 25px',
+                border: '3px solid #637dbd', // Thicker tab border
+                borderRadius: '5px',
+                marginRight: '5px', // Space tabs
+              }}
             >
               Overview
             </button>
@@ -55,6 +80,15 @@ export default function GrantDetails() {
               type='button'
               role='tab'
               aria-selected={activeTab === 'ImportantDates'}
+              style={{
+                fontSize: '20px',
+                color: '#ffffff',
+                backgroundColor: activeTab === 'ImportantDates' ? '#506299' : '#637dbd',
+                padding: '15px 25px',
+                border: '3px solid #637dbd',
+                borderRadius: '5px',
+                marginRight: '10px',
+              }}
             >
               Important Dates
             </button>
@@ -67,58 +101,301 @@ export default function GrantDetails() {
               type='button'
               role='tab'
               aria-selected={activeTab === 'Logs'}
+              style={{
+                fontSize: '20px',
+                color: '#ffffff',
+                backgroundColor: activeTab === 'Logs' ? '#506299' : '#637dbd',
+                padding: '15px 25px',
+                border: '3px solid #637dbd',
+                borderRadius: '5px',
+                marginRight: '10px',
+              }}
             >
-              Logs
+              Finances & Logs
             </button>
           </li>
         </ul>
-
-        <div className='tab-content'>
+        <div>
           {activeTab === 'Overview' && (
-            <div className='tab-pane fade show active'>
-              <h2>Grant Overview</h2>
-              <ul>
-                <li>Grant was last updated on: {moment(gd.last_edit_date).format('MMMM Do, YYYY')}</li>
-                <li>Updates were made by: {gd.last_edit_by}</li>
-                <li>Grant Type: {gd.grant_type}</li>
-                <li>Funding Source: {gd.funding_src}</li>
-                <li>Description & Purpose: {gd.description}</li>
-                <li>Grant Lead: {gd.grant_lead}</li>
-                <li>Funds Awarded: ${gd.award_sum ? Number(gd.award_sum).toLocaleString('en-US') : 'N/A'}</li>
-                <li>Start Date: {moment(gd.start_date).calendar()}</li>
-                <li>End Date: {moment(gd.end_date).calendar()}</li>
-                <li>Notes: {gd.notes}</li>
-                <button onClick={() => history.push(`/edit/${id}`)}>Edit Grant</button>
-              </ul>
-            </div>
-          )}
-          {activeTab === 'ImportantDates' && (
-            <div className='tab-pane fade show active'>
-              <h2>Important Dates</h2>
-              <ul>
-                <h4>Important Dates</h4>
-                <li> First Quarterly Report due: {moment(gd.q1_report_date).calendar()}</li>
-                <li> Second Quarterly Report due: {moment(gd.q2_report_date).calendar()}</li>
-                <li>Third Quarterly Report due: {moment(gd.q3_report_date).calendar()}</li>
-                <li>Fourth Quarterly Report due: {moment(gd.q4_report_date).calendar()}</li>
-                <li>Audit date: {moment(gd.audit_date).calendar()}</li>
-              </ul>
-            </div>
-          )}
-          {activeTab === 'Logs' && (
-            <div className='tab-pane fade show active'>
-              <h2>Grant Updates & Logs</h2>
-              <Logs grantId={id} />
-            </div>
+            <Card style={{ backgroundColor: '#fbf7ed' }}>
+              <Card.Header
+                style={{
+                  backgroundColor: '#304c54',
+                  fontSize: '35px',
+                  height: '80px',
+                  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+                  paddingTop: '20px',
+                  paddingLeft: '40px',
+                  paddingBottom: '20px',
+                }}
+                className='text-white'
+              >
+                {gd.grant_name}
+                <span
+                  className='badge bg-success'
+                  style={{ fontSize: '20px', float: 'right', marginRight: '80px', marginTop: '10px' }}
+                >
+                  {gd.grant_abbreviation}
+                </span>
+              </Card.Header>
+              <Card.Body style={{ paddingLeft: '80px' }}>
+                <Card.Text>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      paddingRight: '70px',
+                      paddingTop: '15px',
+                      fontSize: '20px',
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: '35px',
+                        paddingBottom: '30px',
+                        textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+                      }}
+                    >
+                      Grant Overview
+                    </span>
+
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                      }}
+                    >
+                      <span>
+                        <strong>Grant was last updated on:</strong> {moment(gd.last_edit_date).format('MMMM Do, YYYY')}
+                      </span>
+                      <span>
+                        <strong>Updates were made by:</strong> {gd.last_edit_by}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div style={{ fontSize: '24px', paddingBottom: '5px' }}>
+                    <p>
+                      <strong>Grant Type:</strong> {gd.grant_type}
+                    </p>
+                    <p>
+                      <strong> Funding Source: </strong>
+                      {gd.funding_src}
+                    </p>
+                    <p>
+                      <strong>Description & Purpose:</strong> {gd.description}
+                    </p>
+                    <p>
+                      <strong>Grant Lead:</strong> {gd.grant_lead}
+                    </p>
+                    <p>
+                      <strong>Funds Awarded: </strong>$
+                      {gd.award_sum ? Number(gd.award_sum).toLocaleString('en-US') : 'N/A'}
+                    </p>
+                    <p>
+                      <strong>Start Date:</strong> {moment(gd.start_date).calendar()}
+                    </p>
+                    <p>
+                      <strong>End Date:</strong> {moment(gd.end_date).calendar()}
+                    </p>
+                    <p>
+                      <strong>Notes:</strong> {gd.notes}
+                    </p>
+                  </div>
+                </Card.Text>
+                <Button
+                  className='action-button'
+                  style={{
+                    fontSize: '22px',
+                    color: 'black',
+                    backgroundColor: '#ffd700',
+                    border: '2px solid #637dbd',
+                    width: '150px',
+                    height: '70px',
+
+                    marginLeft: '650px',
+                    marginBottom: '20px',
+                  }}
+                  onClick={() => history.push(`/edit/${id}`)}
+                >
+                  Edit Grant
+                </Button>
+              </Card.Body>
+            </Card>
           )}
         </div>
-        <Tabs>
-          <Tab title='Home'>Home</Tab>
-          <Tab title='Home'>Home</Tab>
-          <Tab title='Home'>Home</Tab>
-        </Tabs>
+
+        <div>
+          {activeTab === 'ImportantDates' && (
+            <Card style={{ backgroundColor: '#fbf7ed' }}>
+              <Card.Header
+                style={{
+                  backgroundColor: '#304c54',
+                  fontSize: '35px',
+                  height: '80px',
+                  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+                  paddingTop: '20px',
+                  paddingLeft: '40px',
+                  paddingBottom: '20px',
+                }}
+                className='text-white'
+              >
+                {gd.grant_name}
+                <span
+                  className='badge bg-success'
+                  style={{ fontSize: '20px', float: 'right', marginRight: '80px', marginTop: '10px' }}
+                >
+                  {gd.grant_abbreviation}
+                </span>
+              </Card.Header>
+              <Card.Body style={{ paddingLeft: '80px' }}>
+                <Card.Text>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      paddingRight: '70px',
+                      paddingTop: '15px',
+                      fontSize: '20px',
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: '32px',
+                        paddingBottom: '30px',
+                        textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+                      }}
+                    >
+                      Important Dates and Deadlines
+                    </span>
+
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                      }}
+                    >
+                      <span>
+                        <strong>Grant was last updated on:</strong> {moment(gd.last_edit_date).format('MMMM Do, YYYY')}
+                      </span>
+                      <span>
+                        <strong>Updates were made by:</strong> {gd.last_edit_by}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div style={{ fontSize: '24px', paddingBottom: '5px' }}>
+                    <p>
+                      <strong>First Quarterly Report due:</strong> {moment(gd.q1_report_date).calendar()}
+                    </p>
+                    <p>
+                      <strong>Second Quarterly Report due:</strong> {moment(gd.q2_report_date).calendar()}
+                    </p>
+                    <p>
+                      <strong>Third Quarterly Report due:</strong> {moment(gd.q3_report_date).calendar()}
+                    </p>
+                    <p>
+                      <strong>Fourth Quarterly Report due:</strong> {moment(gd.q4_report_date).calendar()}
+                    </p>
+                    <p>
+                      <strong>Audit date:</strong> {moment(gd.audit_date).calendar()}
+                    </p>
+                  </div>
+                </Card.Text>
+                <Button
+                  style={{
+                    fontSize: '22px',
+                    color: 'black',
+                    backgroundColor: '#ffd700',
+                    border: '2px solid #637dbd',
+                    width: '150px',
+                    height: '70px',
+
+                    marginLeft: '650px',
+                    marginBottom: '20px',
+                  }}
+                  onClick={() => history.push(`/edit/${id}`)}
+                >
+                  Edit Grant
+                </Button>
+              </Card.Body>
+            </Card>
+          )}
+        </div>
+
+        {activeTab === 'Logs' && (
+          <div className='tab-pane fade show active'>
+            <Card style={{ backgroundColor: '#fbf7ed' }}>
+              <Card.Header
+                style={{
+                  backgroundColor: '#304c54',
+                  fontSize: '35px',
+                  height: '80px',
+                  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+                  paddingTop: '20px',
+                  paddingLeft: '40px',
+                  paddingBottom: '20px',
+                }}
+                className='text-white'
+              >
+                {gd.grant_name}
+                <span
+                  className='badge bg-success'
+                  style={{ fontSize: '20px', float: 'right', marginRight: '80px', marginTop: '10px' }}
+                >
+                  {gd.grant_abbreviation}
+                </span>
+              </Card.Header>
+              <Card.Body style={{ paddingLeft: '80px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    paddingRight: '70px',
+                    paddingTop: '15px',
+                    fontSize: '20px',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: '35px',
+                      paddingBottom: '30px',
+                      textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+                    }}
+                  >
+                    Financial Overview & Logs
+                  </span>
+
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-end',
+                    }}
+                  >
+                    <span>
+                      <strong>Grant was last updated on:</strong> {moment(gd.last_edit_date).format('MMMM Do, YYYY')}
+                    </span>
+                    <span>
+                      <strong>Updates were made by:</strong> {gd.last_edit_by}
+                    </span>
+                  </div>
+                </div>
+
+                <Logs grantId={id} />
+              </Card.Body>
+            </Card>
+          </div>
+        )}
       </div>
-      
     </>
   );
 }

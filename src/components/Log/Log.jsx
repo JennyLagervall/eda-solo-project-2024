@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import LogForm from '../LogForm/LogForm';
 import moment from 'moment-timezone';
 import GrantFunds from '../GrantFunds/GrantFunds';
+import { Card, Button, Container } from 'react-bootstrap';
 
 export default function Logs({ grantId }) {
   const logs = useSelector((store) => store.log);
@@ -17,44 +18,64 @@ export default function Logs({ grantId }) {
   }, []);
 
   return (
-    <>
-      <h3> Grant Logs</h3>
+    <Container>
+      <GrantFunds grantId={id} />
+      {/* <h3
+        style={{
+          paddingTop: '20px',
+          paddingBottom: '10px',
+          
+          
+          fontSize: '30px',
+          
+        }}
+      >
+        Submit Grant Activity
+      </h3> */}
       <div>
-        <h4> Add Log </h4>
         <LogForm grantId={grantId} />
       </div>
-      <div>
-        <ul>
-          {logs
-            .filter((l) => Number(l.grant_id) === Number(grantId))
-            .map((log) => {
-              return (
-                <li key={log.id}>
-                  Submitted on: {moment(log.submit_date).calendar()} <br />
-                  Submitted by: {log.first_name} {log.last_name}
-                  <br />
-                  Log type: {log.log_type} <br />
-                  {log.expenditure_amount > 0 && (
-                    <>
-                      Expenditure amount: $
-                      {log.expenditure_amount ? Number(log.expenditure_amount).toLocaleString('en-US') : 'N/A'} <br />
-                    </>
-                  )}
-                  Details: {log.details} <br />
-                  <button
-                    onClick={() => {
-                      console.log('deleting log by id:', log.id);
-                      dispatch({ type: 'DELETE_LOG', payload: log.id });
-                    }}
-                  >
-                    Delete Log
-                  </button>
-                </li>
-              );
-            })}
-        </ul>
-      </div>
-      <GrantFunds grantId={id} />
-    </>
+      <Container>
+        {logs
+          .filter((l) => Number(l.grant_id) === Number(grantId))
+          .map((log) => (
+            <Card key={log.id} style={{ marginBottom: '1.5rem', padding: '3rem' }}>
+              <Card.Body>
+                <Card.Title>Grant Activity Log</Card.Title>
+                <div style={{ textAlign: 'right' }}>
+                  <Card.Subtitle className='mb-2 text-muted'>
+                    <strong>Submitted on: </strong> {moment(log.submit_date).calendar()}
+                  </Card.Subtitle>
+                  <Card.Subtitle className='mb-2 text-muted'>
+                    <strong> Submitted by:</strong> {log.first_name} {log.last_name}
+                  </Card.Subtitle>
+                </div>
+                <Card.Text>
+                  <strong>Log type: </strong> {log.log_type}
+                </Card.Text>
+                {log.expenditure_amount > 0 && (
+                  <Card.Text>
+                    <strong> Expenditure amount: $ </strong>
+                    {log.expenditure_amount ? Number(log.expenditure_amount).toLocaleString('en-US') : 'N/A'}
+                  </Card.Text>
+                )}
+                <Card.Text>
+                  <strong> Details: </strong>
+                  {log.details}
+                </Card.Text>
+                <Button
+                  className='deleteBtn'
+                  onClick={() => {
+                    console.log('deleting log by id:', log.id);
+                    dispatch({ type: 'DELETE_LOG', payload: log.id });
+                  }}
+                >
+                  Delete Log
+                </Button>
+              </Card.Body>
+            </Card>
+          ))}
+      </Container>
+    </Container>
   );
 }

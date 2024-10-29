@@ -1,0 +1,37 @@
+.grantCard{
+    background-color: #fbf7ed;
+}
+
+
+.listButton {
+  /* width: 100%; */
+  padding: 0.75rem;
+  background-color: #637dbd;
+  border: none;
+  color: white;
+  cursor: pointer; 
+}
+
+.listButton:hover {
+  background-color: #506299;
+  color: #ffd700; 
+}
+
+.deleteBtn {
+ background-color: #d9534f !important; 
+ border-color: red !important;
+}
+.deleteBtn:hover {
+   background-color: #a5281c!important;
+  border-color: #c9302c !important;
+}
+.highlight-remaining-funds{
+  .highlight-remaining-funds {
+  background-color: yellow; /* Highlight background color */
+  transition: background-color 0.3s ease;
+}
+
+.highlight-remaining-funds:hover {
+  background-color: #ffecb3; /* Slightly darker highlight on hover */
+}
+}

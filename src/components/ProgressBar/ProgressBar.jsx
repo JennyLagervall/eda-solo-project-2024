@@ -17,7 +17,12 @@ export default function ProgressBarComponent({ grantId, grantSum }) {
 
   return (
     <div>
-      <ProgressBar now={expendPct()} label={`${expendPct()}%`} variant='info' />
+      <ProgressBar
+        now={expendPct()}
+        label={`${expendPct()}%`}
+        variant='warning'
+        style={{ paddingTop: '2px', height: '1.75rem', fontSize: '1.25rem' }}
+      />
     </div>
   );
 }

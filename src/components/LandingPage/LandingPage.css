@@ -1,80 +1,64 @@
-/* --------------------------------------------------------------------------------
-Grid
--------------------------------------------------------------------------------- */
+body {
+  background-color: #6c9a80;
+  margin: 0;
+  padding: 0;
+}
 
-.grid {
+.landing-container {
   display: flex;
-  flex: 0 1 auto;
-  /* defaults to 'row' */
-  flex-direction: row;
-  flex-wrap: wrap;
-  /* defaults to 'flex-start' */
+  flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
+  height: 100vh; /* Full height to center vertically */
+  text-align: center; /* Center text in the container */
+  margin-top: 100px;
 }
 
-.grid-col {
-  flex: 0 0 auto;
-  padding: 0 0.5rem 0.5rem;
-  box-sizing: border-box;
+.logo-landing-container {
+  display: flex;
+  justify-content: center; /* Center the logo */
+  align-items: center;
+  margin: 20px 0;
+  position: relative; /* Allows the background shape to be positioned */
 }
 
-.grid-col_1 {
-  flex-basis: 8.33333333%;
-  max-width: 8.33333333%;
+.logo-landing-container::before {
+  content: '';
+  position: absolute;
+  width: 700px; /* The size of the background shape */
+  height: 700px;
+  background-color: rgba(80, 98, 153, 0.3); 
+  /* background-color: #506299; Color for the background shape */
+  border-radius: 50%; /* Make it a circle */
+  z-index: -1; /* Send it behind the logo */
+  top: -50px; /* Adjust the vertical position */
+  left: -50px; /* Adjust the horizontal position */
 }
 
-.grid-col_2 {
-  flex-basis: 16.66666667%;
-  max-width: 16.66666667%;
+.logoLanding {
+  width: 600px; /* Increased the width to make the image bigger */
+  height: auto; /* Keeps aspect ratio */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
 }
 
-.grid-col_3 {
-  flex-basis: 25%;
-  max-width: 25%;
+button {
+  padding: 15px 30px;
+  font-size: 24px;
+  background-color: #ffd700;
+  color: #304c54;
+  border-radius: 8px;
+  border: 2px solid #304c54;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
 }
 
-.grid-col_4 {
-  flex-basis: 33.33333333%;
-  max-width: 33.33333333%;
+button:hover {
+  background-color: #ffcc00; /* Slightly change the color on hover */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6); /* Darken the shadow on hover */
 }
 
-.grid-col_5 {
-  flex-basis: 41.66666667%;
-  max-width: 41.66666667%;
-}
 
-.grid-col_6 {
-  flex-basis: 50%;
-  max-width: 50%;
-}
-
-.grid-col_7 {
-  flex-basis: 58.33333333%;
-  max-width: 58.33333333%;
-}
-
-.grid-col_8 {
-  flex-basis: 66.66666667%;
-  max-width: 66.66666667%;
-}
-
-.grid-col_9 {
-  flex-basis: 75%;
-  max-width: 75%;
-}
-
-.grid-col_10 {
-  flex-basis: 83.33333333%;
-  max-width: 83.33333333%;
-}
-
-.grid-col_11 {
-  flex-basis: 91.66666667%;
-  max-width: 91.66666667%;
-}
-
-.grid-col_12 {
-  flex-basis: 100%;
-  max-width: 100%;
-}

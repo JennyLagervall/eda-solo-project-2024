@@ -32,32 +32,32 @@ Button
   border-color: #014041;
   border-width: 1px 1px 3px;
   border-radius: 4px;
-  background-color: #00acb0;
-  color: #f8f8f8;
+  /* background-color: #b5c5b6; */
+  /* color: #f8f8f8; */
   font-size: 1.1rem;
   outline: 0;
   cursor: pointer;
 }
 
-.btn_sizeMin {
+/* .btn_sizeMin {
   min-height: 50px;
   min-width: 100px;
-}
+} */
 
-.btn_sizeSm {
+/* .btn_sizeSm {
   padding: 10px 15px;
   font-size: 0.8rem;
-}
+} */
 
-.btn_sizeFull {
+/* .btn_sizeFull {
   display: block;
   width: 100%;
-}
+} */
 
-.btn:hover {
+/* .btn:hover {
   background-color: #008183;
   text-decoration: none;
-}
+} */
 
 /* This line makes the "Register" and "Login" buttons look like links */
 .btn_asLink {
@@ -109,4 +109,7 @@ Form Treatment
 input {
   margin: 5px;
   margin-bottom: 10px;
+}
+.progress-bar {
+  color: black;
 }
